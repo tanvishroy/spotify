@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Movie Songs Hub</title>
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #121212;
+      color: white;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Navbar */
+    .navbar {
+      background-color: #1e1e1e;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .navbar-left {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .navbar-left img {
+      height: 32px;
+      width: auto;
+    }
+
+    .navbar-left span {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #1db954;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .nav-links a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: #1db954;
+    }
+
+    .nav-dropdown {
+      display: none;
+    }
+
+    /* Search */
+    .search-box {
+      margin: 2rem auto;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+
+    .search-box input {
+      padding: 0.6rem 1rem;
+      border-radius: 8px;
+      border: none;
+      width: 80%;
+      max-width: 400px;
+      background-color: #2a2a2a;
+      color: white;
+      font-size: 1rem;
+    }
+
+    /* Playlist Grid */
+    .playlist-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2rem;
+      width: 100%;
+      max-width: 1300px;
+      padding: 0 1rem 2rem;
+      margin: 0 auto;
+    }
+
+    .playlist-card {
+      background-color: #1e1e1e;
+      border-radius: 14px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      text-decoration: none;
+      color: white;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+    }
+
+    .playlist-card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7);
+    }
+
+    .image-container {
+      position: relative;
+      width: 100%;
+      padding-top: 100%;
+      overflow: hidden;
+    }
+
+    .image-container img {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .playlist-card:hover .image-container img {
+      transform: scale(1.05);
+    }
+
+    .playlist-name {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      padding: 0.8rem;
+      background: rgba(0, 0, 0, 0.6);
+      font-weight: bold;
+      font-size: 1.2rem;
+      text-align: center;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+
+      .nav-dropdown {
+        display: block;
+        position: relative;
+      }
+
+      .nav-dropdown select {
+        padding: 0.5rem;
+        background-color: #2a2a2a;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-size: 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .search-box {
+        margin: 1.5rem auto;
+      }
+
+      .search-box input {
+        width: 95%;
+      }
+
+      .playlist-grid {
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 1.2rem;
+      }
+
+      .playlist-name {
+        font-size: 1rem;
+        padding: 0.6rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navbar -->
+  <nav class="navbar">
+    <div class="navbar-left">
+      <img src="images/spotify-logo.png" alt="Spotify Logo" />
+      <span>Spotify</span>
+    </div>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="#">Albums</a>
+      <a href="#">Artists</a>
+      <a href="#">Singers</a>
+    </div>
+
+    <div class="nav-dropdown">
+      <select onchange="location.href=this.value">
+        <option selected disabled>Categories</option>
+        <option value="index.html">Home</option>
+        <option value="#">Albums</option>
+        <option value="#">Artists</option>
+        <option value="#">Singers</option>
+      </select>
+
+    </div>
+  </nav>
+
+  <!-- Search -->
+  <div class="search-box">
+    <input type="text" id="searchInput" placeholder="Search songs, artists..." />
+  </div>
+
+  <!-- Playlist Grid -->
+  <div class="playlist-grid" id="playlistGrid">
+    <a href="devara.html" class="playlist-card">
+      <div class="image-container">
+        <img src="thumbnails/Devara (2024).jpg" alt="Devara" />
+        <div class="playlist-name">Devara</div>
+      </div>
+    </a>
+
+    <a href="hit.html" class="playlist-card">
+      <div class="image-container">
+        <img src="thumbnails/Hit - 3 - (2025).jpg" alt="HIT" />
+        <div class="playlist-name">HIT</div>
+      </div>
+    </a>
+
+    <a href="court.html" class="playlist-card">
+      <div class="image-container">
+        <img src="thumbnails/Court-2025.jpg" alt="Court" />
+        <div class="playlist-name">Court</div>
+      </div>
+    </a>
+
+    <a href="pushpa2.html" class="playlist-card">
+      <div class="image-container">
+        <img src="thumbnails/Pushpa-2.jpg" alt="Pushpa 2" />
+        <div class="playlist-name">Pushpa 2</div>
+      </div>
+    </a>
+
+    <a href="mad.html" class="playlist-card">
+      <div class="image-container">
+        <img src="thumbnails/MAD Square - (2024).jpg" alt="MAD" />
+        <div class="playlist-name">MAD</div>
+      </div>
+    </a>
+
+    <a href="djtillu.html" class="playlist-card">
+      <div class="image-container">
+        <img src="thumbnails/Tillu-Square2023.jpg" alt="DJ Tillu" />
+        <div class="playlist-name">DJ Tillu</div>
+      </div>
+    </a>
+  </div>
+
+  <!-- Search Function Script -->
+  <script>
+    const searchInput = document.getElementById('searchInput');
+    const cards = document.querySelectorAll('.playlist-card');
+
+    searchInput.addEventListener('input', function () {
+      const filter = searchInput.value.toLowerCase();
+
+      cards.forEach(card => {
+        const name = card.querySelector('.playlist-name').textContent.toLowerCase();
+        if (name.includes(filter)) {
+          card.style.display = '';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>

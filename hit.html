@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HIT - Movie Songs Hub</title>
+  <style>
+    body {
+      background-color: #121212;
+      color: white;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      padding-bottom: 100px; /* space for fixed player */
+    }
+
+    .navbar {
+      background-color: #1e1e1e;
+      display: flex;
+      align-items: center;
+      padding: 1rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 1100;
+      text-align: left;
+    }
+
+    .navbar a {
+      color: #1db954;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      text-align: center;
+    }
+
+    .movie-poster {
+      width: 100%;
+      max-width: 400px;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.6);
+      margin: 0 auto 1rem;
+      display: block;
+    }
+
+    .description {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+      color: #ccc;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+    }
+
+    /* Player fixed at bottom */
+    .player {
+      background: #1e1e1e;
+      border-radius: 12px 12px 0 0;
+      max-width: 900px;
+      width: 100%;
+      padding: 1rem 1.5rem;
+      color: white;
+      user-select: none;
+
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.7);
+
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      z-index: 1200;
+    }
+
+    .player-info {
+      flex: 1;
+      text-align: left;
+    }
+
+    .player-info .song-name {
+      font-weight: bold;
+      font-size: 1.2rem;
+      margin-bottom: 0.3rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .player-info .time {
+      font-size: 0.9rem;
+      color: #bbb;
+      margin-top: 0.2rem;
+    }
+
+    /* Progress bar */
+    input[type=range] {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 6px;
+      border-radius: 3px;
+      background: #333;
+      cursor: pointer;
+      margin: 0.3rem 0 0;
+    }
+
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #1db954;
+      cursor: pointer;
+      margin-top: -4px;
+      transition: background-color 0.3s ease;
+    }
+
+    input[type=range]:hover::-webkit-slider-thumb {
+      background: #1ffa70;
+    }
+
+    /* Buttons */
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .controls button {
+      background: #1db954;
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      color: #121212;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.3s ease;
+    }
+
+    .controls button:hover {
+      background-color: #1ffa70;
+    }
+
+    /* Track list */
+    .track-list {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 0;
+      list-style: none;
+      text-align: left;
+    }
+
+    .track-list li {
+      padding: 0.8rem 1rem;
+      border-radius: 8px;
+      margin-bottom: 0.8rem;
+      background: #1e1e1e;
+      cursor: pointer;
+      color: #ccc;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      user-select: none;
+    }
+
+    .track-list li:hover {
+      background-color: #1db954;
+      color: white;
+    }
+
+    #track-list li.active {
+    border-left: 4px solid #1db954; /* Spotify green */
+    background-color: #1e1e1e; /* optional: makes it stand out */
+    padding-left: 12px; /* to offset the border */
+    color: #1db954; /* optional: change font color */
+}
+
+
+    @media (max-width: 600px) {
+      .player {
+        flex-direction: column;
+        gap: 0.7rem;
+      }
+      .player-info {
+        text-align: center;
+      }
+      .player-info .song-name {
+        white-space: normal;
+      }
+      .controls {
+        justify-content: center;
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <a href="index.html">← Back to Home</a>
+  </nav>
+
+  <div class="container">
+    <h1>HIT - 2 </h1>
+    <img src="thumbnails/Hit - 3 - (2025).jpg" alt="Devara Movie Poster" class="movie-poster" />
+
+    <p class="description">
+      "HIT: The Third Case" continues the crime thriller saga, following SP Arjun Sarkaar as he investigates a brutal case involving serial killers.
+    </p>
+
+    <ul class="track-list" id="track-list">
+  <li data-src="songs/hit/Urike Urike.mp3" data-singer="Sid Sriram, Ramya Behara">
+    Urike Urike Song - Adivi Sesh, Meenakshi Chaudhary
+  </li>
+  <li data-src="songs/hit/[iSongs.info] 01 - Prema Velluva.mp3" data-singer="Sid Sriram, Nutana Mohan">
+    Prema Velluva Song - Nani, Srinidhi Shetty
+  </li>
+</ul>
+
+  </div>
+
+  <!-- Player fixed at bottom -->
+  <div class="player">
+    <div class="player-info">
+      <div class="song-name" id="current-song">Select a song to play</div>
+      <div class="singer-name" id="current-singer">Singer: Unknown</div> <!-- NEW LINE -->
+      <input type="range" id="progress-bar" min="0" max="100" value="0" step="1" />
+      <div class="time">
+      <span id="current-time">00:00</span> / <span id="duration">00:00</span>
+      </div>
+    </div>
+
+    <div class="controls">
+      <button id="backward" title="Backward 10 seconds">⏪</button>
+      <button id="play-pause" title="Play">▶️</button>
+      <button id="forward" title="Forward 10 seconds">⏩</button>
+    </div>
+  </div>
+
+  <audio id="audio-player"></audio>
+
+<script>
+  const audio = document.getElementById('audio-player');
+  const trackList = document.getElementById('track-list');
+  const songName = document.getElementById('current-song');
+  const progressBar = document.getElementById('progress-bar');
+  const currentTimeEl = document.getElementById('current-time');
+  const durationEl = document.getElementById('duration');
+  const playPauseBtn = document.getElementById('play-pause');
+  const forwardBtn = document.getElementById('forward');
+  const backwardBtn = document.getElementById('backward');
+
+  let currentTrackIndex = -1;
+  let isPlaying = false;
+
+  function formatTime(seconds) {
+    const mins = Math.floor(seconds / 60) || 0;
+    const secs = Math.floor(seconds % 60) || 0;
+    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+  }
+
+  function updateProgressBarBackground(percent) {
+    progressBar.style.background = `linear-gradient(to right, #1db954 0%, #1db954 ${percent}%, #333 ${percent}%)`;
+  }
+
+  const singerName = document.getElementById('current-singer');
+
+  function loadTrack(index) {
+  if (index < 0 || index >= trackList.children.length) return;
+
+  [...trackList.children].forEach(li => li.classList.remove('active'));
+
+  const track = trackList.children[index];
+  currentTrackIndex = index;
+  audio.src = track.dataset.src;
+  songName.textContent = track.textContent;
+  singerName.textContent = track.dataset.singer || '';
+  progressBar.value = 0;
+  currentTimeEl.textContent = '00:00';
+  durationEl.textContent = '00:00';
+  isPlaying = false;
+  playPauseBtn.textContent = '▶️';
+  playPauseBtn.title = 'Play';
+
+  track.classList.add('active');
+  audio.load();
+  }
+
+
+  function togglePlayPause() {
+    if (!audio.src) return;
+
+    if (audio.paused) {
+      audio.play();
+    } else {
+      audio.pause();
+    }
+  }
+
+  audio.addEventListener('timeupdate', () => {
+    if (!audio.duration) return;
+
+    const percent = (audio.currentTime / audio.duration) * 100;
+    progressBar.value = percent;
+    currentTimeEl.textContent = formatTime(audio.currentTime);
+    durationEl.textContent = formatTime(audio.duration);
+    updateProgressBarBackground(percent);
+  });
+
+  audio.addEventListener('ended', () => {
+    playPauseBtn.textContent = '▶️';
+    playPauseBtn.title = 'Play';
+    isPlaying = false;
+  });
+
+  audio.addEventListener('play', () => {
+    isPlaying = true;
+    playPauseBtn.textContent = '⏸️';
+    playPauseBtn.title = 'Pause';
+  });
+
+  audio.addEventListener('pause', () => {
+    isPlaying = false;
+    playPauseBtn.textContent = '▶️';
+    playPauseBtn.title = 'Play';
+  });
+
+  progressBar.addEventListener('input', () => {
+    if (!audio.duration) return;
+
+    const time = (progressBar.value / 100) * audio.duration;
+    audio.currentTime = time;
+    updateProgressBarBackground(progressBar.value);
+  });
+
+  trackList.addEventListener('click', e => {
+    if (e.target && e.target.tagName === 'LI') {
+      const clickedIndex = [...trackList.children].indexOf(e.target);
+
+      if (clickedIndex === currentTrackIndex) {
+        togglePlayPause();
+      } else {
+        loadTrack(clickedIndex);
+        audio.play();
+      }
+    }
+  });
+
+  playPauseBtn.addEventListener('click', () => {
+    togglePlayPause();
+  });
+
+  forwardBtn.addEventListener('click', () => {
+    if (!audio.src) return;
+    audio.currentTime = Math.min(audio.currentTime + 10, audio.duration);
+  });
+
+  backwardBtn.addEventListener('click', () => {
+    if (!audio.src) return;
+    audio.currentTime = Math.max(audio.currentTime - 10, 0);
+  });
+
+  // Initialize first track
+  loadTrack(0);
+</script>
+
+</body>
+</html>
