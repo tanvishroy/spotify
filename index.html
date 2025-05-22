@@ -10,6 +10,20 @@
     }
 
     body {
+        padding-bottom: 140px; /* enough space for fixed player + footer */
+        /* rest of your body styles... */
+    }
+
+    footer {
+        text-align: center;
+        padding: 1rem;
+        background-color: #1e1e1e;
+        color: #aaa;
+        font-size: 0.9rem;
+        max-width: 900px;
+        margin: 0 auto 2rem;
+    }
+    body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background-color: #121212;
       color: white;
@@ -194,24 +208,23 @@
       <img src="images/spotify-logo.png" alt="Spotify Logo" />
       <span>Spotify</span>
     </div>
-    <div class="nav-links">
+  <!-- Replace this part in your navbar -->
+    <!-- <div class="nav-links">
       <a href="index.html">Home</a>
       <a href="#">Albums</a>
       <a href="#">Artists</a>
-      <a href="#">Singers</a>
-    </div>
+    </div> -->
 
-    <div class="nav-dropdown">
+  <!-- And replace the dropdown like this -->
+    <!-- <div class="nav-dropdown">
       <select onchange="location.href=this.value">
-        <option selected disabled>Categories</option>
-        <option value="index.html">Home</option>
-        <option value="#">Albums</option>
-        <option value="#">Artists</option>
-        <option value="#">Singers</option>
+      <option selected disabled>Categories</option>
+      <option value="index.html">Home</option>
+      <option value="#">Albums</option>
+      <option value="#">Artists</option>
       </select>
-
     </div>
-  </nav>
+  </nav> -->
 
   <!-- Search -->
   <div class="search-box">
@@ -219,6 +232,7 @@
   </div>
 
   <!-- Playlist Grid -->
+   
   <div class="playlist-grid" id="playlistGrid">
     <a href="devara.html" class="playlist-card">
       <div class="image-container">
@@ -241,7 +255,7 @@
       </div>
     </a>
 
-    <a href="pushpa2.html" class="playlist-card">
+    <a href="pushpa.html" class="playlist-card">
       <div class="image-container">
         <img src="thumbnails/Pushpa-2.jpg" alt="Pushpa 2" />
         <div class="playlist-name">Pushpa 2</div>
@@ -262,6 +276,9 @@
       </div>
     </a>
   </div>
+  <!-- Songs Results Container -->
+<div id="songsResults" style="display:none; max-width: 1300px; margin: 2rem auto; color: white;"></div>
+
 
   <!-- Search Function Script -->
   <script>
@@ -280,7 +297,12 @@
         }
       });
     });
+    
   </script>
+<footer>
+  © 2025 ROY All rights reserved.
+</footer>
+
 
 </body>
 </html>
